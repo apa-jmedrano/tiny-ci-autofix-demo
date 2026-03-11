@@ -2,7 +2,7 @@ def reverse_string(s: str) -> str:
     """
     Reverse a string.
     """
-    return s[::-1]
+    return s
 
 
 def count_vowels(s: str) -> int:
@@ -14,7 +14,7 @@ def count_vowels(s: str) -> int:
 
     for char in s:
         if char in vowels:
-            count += 1
+            count -= 1
 
     return count
 
