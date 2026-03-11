@@ -4,5 +4,6 @@ src/math_utils.py
 src/tiny_ci_autofix_demo.egg-info/PKG-INFO
 src/tiny_ci_autofix_demo.egg-info/SOURCES.txt
 src/tiny_ci_autofix_demo.egg-info/dependency_links.txt
+src/tiny_ci_autofix_demo.egg-info/requires.txt
 src/tiny_ci_autofix_demo.egg-info/top_level.txt
 tests/test_math_utils.py

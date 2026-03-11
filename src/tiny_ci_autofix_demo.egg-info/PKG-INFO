@@ -4,6 +4,7 @@ Version: 0.1.0
 Summary: Tiny self-healing CI demo
 Requires-Python: >=3.11
 Description-Content-Type: text/markdown
+Requires-Dist: pytest>=8.0
 
 # Tiny Self-Healing CI Demo
 
