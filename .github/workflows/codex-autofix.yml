@@ -25,7 +25,7 @@ jobs:
         uses: astral-sh/setup-uv@v1
 
       - name: Install deps
-        run: uv sync
+        run: uv sync --dev
 
       - name: Run tests (capture logs)
         run: |
