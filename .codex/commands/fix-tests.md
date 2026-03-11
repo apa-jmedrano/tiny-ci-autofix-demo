@@ -1,9 +1,16 @@
-You are fixing a failing CI run in this repository.
+Fix failing CI by making `uv run pytest -q` pass.
 
 Rules:
-- Keep changes minimal and targeted.
-- Do not weaken, skip, or delete tests.
-- Prefer fixing code under src/.
-- Re-run tests and ensure they pass.
+- Do NOT modify files under `tests/`
+- Prefer minimal diffs
+- Keep existing function signatures
 
-Use pytest.log to identify failures, apply a focused fix, and make CI green.
+Steps:
+1) Run tests: `uv run pytest -q`
+2) Read failures and determine root cause
+3) Patch only `src/` code
+4) Re-run `uv run pytest -q` until green
+
+When done:
+- Summarize what changed
+- List the commands you ran
