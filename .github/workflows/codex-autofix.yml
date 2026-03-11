@@ -33,16 +33,6 @@ jobs:
           uv run pytest -q 2>&1 | tee pytest.log
           exit 0
 
-      - name: Install Node (for Codex CLI)
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install Codex CLI
-        run: |
-          # Replace with your preferred install method if different
-          npm install -g @openai/codex
-
       - name: Run Codex (non-interactive)
         id: run_codex
         uses: openai/codex-action@v1
