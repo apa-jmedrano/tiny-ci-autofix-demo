@@ -5,7 +5,8 @@ Requirements:
 2. Never weaken, skip, delete, or rewrite tests to make them pass.
 3. Keep changes minimal and focused on the test failures.
 4. Preserve existing public function names and behavior unless tests require a bug fix.
-5. After edits, run tests and ensure all tests pass.
+5. Do not modify files under `tests/`, `.github/workflows/`, or `.codex/prompts/`.
+6. After edits, run tests and ensure all tests pass.
 
 Input available in the workspace:
 - Python source code in `src/`
