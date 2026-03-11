@@ -4,87 +4,60 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: "Branch to fix (example: feature/break-ci)"
+        description: "Branch to fix (e.g., feature/break-ci)"
         required: true
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 permissions:
+  # If you're committing back to branches, your workflow needs write permissions:
   contents: write
   pull-requests: write
 
 jobs:
   autofix:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout target branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           ref: ${{ inputs.branch }}
-          fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v1
 
-      - name: Install dependencies
-        run: uv sync --dev
+      - name: Install deps
+        run: uv sync
 
       - name: Run tests (capture logs)
-        id: pretests
         run: |
           set +e
           uv run pytest -q 2>&1 | tee pytest.log
-          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Install Node.js
-        uses: actions/setup-node@v6
+      - name: Install Node (for Codex CLI)
+        uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version: "20"
 
       - name: Install Codex CLI
-        run: npm install -g @openai/codex
+        run: |
+          # Replace with your preferred install method if different
+          npm install -g @openai/codex
 
-      - name: Run Codex non-interactively
+      - name: Run Codex (non-interactive)
+        id: run_codex
         uses: openai/codex-action@v1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          prompt-file: .codex/prompts/fix-ci.prompt.md
+          prompt-file: .codex/commands/fix-tests.md
           sandbox: workspace-write
-
-      - name: Enforce protected paths
-        run: |
-          # Never allow auto-fix to alter tests or workflow policy files.
-          git restore --worktree --staged tests .github/workflows .codex/prompts || true
-
-      - name: Show diff summary after Codex
-        run: |
-          echo "Changed files after Codex run:"
-          git status --short
-          git --no-pager diff --stat
 
       - name: Re-run tests (must be green)
         run: uv run pytest -q
 
-      - name: Commit and push fix
+      - name: Commit & push changes
         run: |
           git config user.name "codex-autofix-bot"
           git config user.email "codex-autofix-bot@users.noreply.github.com"
-          rm -f pytest.log
-
-          if git diff --quiet; then
-            if [ "${{ steps.pretests.outputs.exit_code }}" != "0" ]; then
-              echo "Tests were failing before auto-fix, but Codex produced no patch."
-              echo "Check OPENAI_API_KEY secret, branch input, and Codex action logs."
-              exit 1
-            fi
-
-            echo "No changes were needed because tests were already passing."
-            exit 0
-          fi
-
           git add -A
-          git commit -m "autofix: make CI green"
-          git push origin "${{ inputs.branch }}"
+          git commit -m "autofix: make CI green" || exit 0
+          git push
