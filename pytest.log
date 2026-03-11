@@ -1,2 +1,38 @@
-....                                                                     [100%]
-4 passed in 0.01s
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________________ test_reverse_string ______________________________
+
+    def test_reverse_string():
+>       assert reverse_string("abc") == "cba"
+E       AssertionError: assert 'abc' == 'cba'
+E         
+E         - cba
+E         + abc
+
+tests/test_string_utils.py:5: AssertionError
+______________________________ test_count_vowels _______________________________
+
+    def test_count_vowels():
+>       assert count_vowels("hello") == 2
+E       AssertionError: assert -2 == 2
+E        +  where -2 = count_vowels('hello')
+
+tests/test_string_utils.py:9: AssertionError
+____________________________ test_palindrome_false _____________________________
+
+    def test_palindrome_false():
+>       assert is_palindrome("python") is False
+E       AssertionError: assert True is False
+E        +  where True = is_palindrome('python')
+
+tests/test_string_utils.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_string_utils.py::test_reverse_string - AssertionError: assert 'abc' == 'cba'
+  
+  - cba
+  + abc
+FAILED tests/test_string_utils.py::test_count_vowels - AssertionError: assert -2 == 2
+ +  where -2 = count_vowels('hello')
+FAILED tests/test_string_utils.py::test_palindrome_false - AssertionError: assert True is False
+ +  where True = is_palindrome('python')
+3 failed, 1 passed in 0.03s
