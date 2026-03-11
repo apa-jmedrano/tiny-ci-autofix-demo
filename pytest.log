@@ -1,0 +1,33 @@
+FF.F                                                                     [100%]
+=================================== FAILURES ===================================
+____________________________ test_add_small_numbers ____________________________
+
+    def test_add_small_numbers() -> None:
+>       assert add(2, 3) == 5
+E       assert -1 == 5
+E        +  where -1 = add(2, 3)
+
+tests/test_math_utils.py:7: AssertionError
+_______________________________ test_safe_divide _______________________________
+
+    def test_safe_divide() -> None:
+>       assert safe_divide(9, 3) == 3
+E       assert 27 == 3
+E        +  where 27 = safe_divide(9, 3)
+
+tests/test_math_utils.py:11: AssertionError
+_________________________________ test_is_even _________________________________
+
+    def test_is_even() -> None:
+>       assert is_even(10) is True
+E       assert False is True
+E        +  where False = is_even(10)
+
+tests/test_math_utils.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_math_utils.py::test_add_small_numbers - assert -1 == 5
+ +  where -1 = add(2, 3)
+FAILED tests/test_math_utils.py::test_safe_divide - assert 27 == 3
+ +  where 27 = safe_divide(9, 3)
+FAILED tests/test_math_utils.py::test_is_even - assert False is True
+ +  where False = is_even(10)
